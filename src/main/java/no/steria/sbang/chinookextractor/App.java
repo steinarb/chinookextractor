@@ -16,9 +16,9 @@ public class App
 {
     public static void main( String[] args )
     {
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
     
         String url = "jdbc:postgresql://localhost/Chinook";
@@ -26,33 +26,33 @@ public class App
         String password = "klrp320";
 
         try {
-            con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
-            rs = st.executeQuery("SELECT VERSION()");
+            connection = DriverManager.getConnection(url, user, password);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * from \"InvoiceLine\"");
 
-            if (rs.next()) {
-                System.out.println(rs.getString(1));
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1));
             }
 
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(App.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+            Logger logger = Logger.getLogger(App.class.getName());
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
 
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
+                if (resultSet != null) {
+                    resultSet.close();
                 }
-                if (st != null) {
-                    st.close();
+                if (statement != null) {
+                    statement.close();
                 }
-                if (con != null) {
-                    con.close();
+                if (connection != null) {
+                    connection.close();
                 }
 
             } catch (SQLException ex) {
-                Logger lgr = Logger.getLogger(App.class.getName());
-                lgr.log(Level.WARNING, ex.getMessage(), ex);
+                Logger logger = Logger.getLogger(App.class.getName());
+                logger.log(Level.WARNING, ex.getMessage(), ex);
             }
         }    }
 }
