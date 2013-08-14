@@ -1,0 +1,7 @@
+* Transform Chinook data to JSON
+
+This repository contains a Java utility that extracts data from a
+[[http://chinookdatabase.codeplex.com/][Chinook sample database]] and transform the results to JSON.
+
+The utility is packaged as a maven project, created with m2e in
+eclipse.
