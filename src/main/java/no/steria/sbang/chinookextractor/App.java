@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Hello world!
  *
@@ -30,15 +34,20 @@ public class App
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * from \"InvoiceLine\"");
 
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString(1));
+            JSONArray resultSetAsJson = ResultSetConverter.convert(resultSet);
+            for(int i=0; i<resultSetAsJson.length(); ++i) {
+            	JSONObject rowAsJson = resultSetAsJson.getJSONObject(i);
+            	System.out.println(rowAsJson);
             }
 
         } catch (SQLException ex) {
             Logger logger = Logger.getLogger(App.class.getName());
             logger.log(Level.SEVERE, ex.getMessage(), ex);
 
-        } finally {
+        } catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
