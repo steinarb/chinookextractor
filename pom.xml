@@ -33,5 +33,16 @@
     	<artifactId>postgresql</artifactId>
     	<version>9.2-1002.jdbc4</version>
     </dependency>
+    <dependency>
+    	<groupId>org.json</groupId>
+    	<artifactId>org.json</artifactId>
+    	<version>chargebee-1.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.mockrunner</groupId>
+    	<artifactId>mockrunner</artifactId>
+    	<version>0.4.2</version>
+    	<scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
