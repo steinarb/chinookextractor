@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.node.Node;
+import static org.elasticsearch.node.NodeBuilder.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +54,7 @@ public class App
             createNestedAlbums(musicPurchaseJson, albumJson);
             createNestedCustomer(musicPurchaseJson, customerJson);
 
+            pushJsonRecordsToElasticsearch(musicPurchaseJson);
             printJsonLines(musicPurchaseJson);
 
         } catch (SQLException ex) {
@@ -141,6 +146,22 @@ public class App
 		for(int i=0; i<jsonArray.length(); ++i) {
 			JSONObject rowAsJson = jsonArray.getJSONObject(i);
 			System.out.println(rowAsJson);
+		}
+	}
+
+	private static void pushJsonRecordsToElasticsearch(JSONArray jsonArray) throws JSONException {
+		Node node = null;
+		try{
+			node = nodeBuilder().node();
+			Client client = node.client();
+			for(int i=0; i<jsonArray.length(); ++i) {
+				JSONObject rowAsJson = jsonArray.getJSONObject(i);
+				IndexResponse response = client.prepareIndex("chinook", "purchase").setSource(rowAsJson.toString()).execute().actionGet();
+			}
+		} finally {
+			if (null != node) {
+				node.close();
+			}
 		}
 	}
 }
