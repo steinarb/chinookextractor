@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.node.Node;
 import static org.elasticsearch.node.NodeBuilder.*;
@@ -156,7 +155,7 @@ public class App
 			Client client = node.client();
 			for(int i=0; i<jsonArray.length(); ++i) {
 				JSONObject rowAsJson = jsonArray.getJSONObject(i);
-				IndexResponse response = client.prepareIndex("chinook", "purchase").setSource(rowAsJson.toString()).execute().actionGet();
+				client.prepareIndex("chinook", "purchase").setSource(rowAsJson.toString()).execute().actionGet();
 			}
 		} finally {
 			if (null != node) {
