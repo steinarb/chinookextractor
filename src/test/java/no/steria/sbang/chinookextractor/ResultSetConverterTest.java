@@ -1,5 +1,7 @@
 package no.steria.sbang.chinookextractor;
 
+import static org.junit.Assert.*;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import com.mockrunner.base.BaseTestCase;
 import com.mockrunner.mock.jdbc.MockResultSet;
 
-public class ResultSetConverterTest extends BaseTestCase {
+public class ResultSetConverterTest {
 
 	@Test
 	public void testConvert() throws SQLException, JSONException {
