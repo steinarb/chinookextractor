@@ -1,7 +1,7 @@
 * Transform Chinook data to JSON
 
 This repository contains a Java utility that extracts data from a
-[[http://chinookdatabase.codeplex.com/][Chinook sample database]] and transform the results to JSON.
+[[https://github.com/lerocha/chinook-database][Chinook sample database]] and transform the results to JSON.
 
 The Chinook sample database is an Open Source replacement for the
 "Northwind" database owned by Microsoft.  The Chinook database lists
