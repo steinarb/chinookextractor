@@ -3,6 +3,8 @@
 This repository contains a Java utility that extracts data from a
 [[https://github.com/lerocha/chinook-database][Chinook sample database]] and transform the results to JSON.
 
+The resulting JSON was used to populate [[https://en.wikipedia.org/wiki/Elasticsearch][elasticsearch]] when trying out elasticsearch in 2013/2014.
+
 The Chinook sample database is an Open Source replacement for the
 "Northwind" database owned by Microsoft.  The Chinook database lists
 music customers and their purchases.
