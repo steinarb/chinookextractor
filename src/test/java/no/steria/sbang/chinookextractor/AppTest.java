@@ -14,7 +14,7 @@ public class AppTest
      * Rigorous Test :-)
      */
     @Test
-	public void testApp()
+    public void testApp()
     {
         assertTrue( true );
     }
