@@ -8,12 +8,16 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.elasticsearch.client.Client;
-import org.elasticsearch.node.Node;
-import static org.elasticsearch.node.NodeBuilder.*;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
 
 /**
  * Hello world!
@@ -149,18 +153,17 @@ public class App
     }
 
     private static void pushJsonRecordsToElasticsearch(JSONArray jsonArray) throws JSONException {
-        Node node = null;
-        try{
-            node = nodeBuilder().node();
-            Client client = node.client();
-            for(int i=0; i<jsonArray.length(); ++i) {
-                JSONObject rowAsJson = jsonArray.getJSONObject(i);
-                client.prepareIndex("chinook", "purchase").setSource(rowAsJson.toString()).execute().actionGet();
+        try (RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200)).build()) {
+            try (RestClientTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper())) {
+                ElasticsearchClient client = new ElasticsearchClient(transport);
+                for(int i=0; i<jsonArray.length(); ++i) {
+                    JSONObject rowAsJson = jsonArray.getJSONObject(i);
+                    IndexRequest<Object> request = IndexRequest.of(ir -> ir.index("chinook").document(rowAsJson));
+                    client.index(request);
+                }
             }
-        } finally {
-            if (null != node) {
-                node.close();
-            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to index database row", e);
         }
     }
 }
