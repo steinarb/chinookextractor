@@ -11,3 +11,27 @@ music customers and their purchases.
 
 This utility is packaged as a maven project, created with m2e in
 eclipse.
+
+** How to use
+
+*** Install elastic
+
+[[https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html][Install elasticsearch using apt on debian]].
+
+**** Generate passwords and tokens
+Reset the password of the elastic built-in superuser with
+#+begin_example
+  /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+#+end_example
+
+
+Generate an enrollment token for Kibana instances with
+#+begin_example
+  /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+#+end_example
+
+
+Generate an enrollment token for Elasticsearch nodes with
+#+begin_example
+  /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node
+#+end_example
